@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  sqlserver:
+    container_name: sqlserver_smart_ride
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    ports:
+      - "8081:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=MyPassword123.
+    volumes:
+      - sql_data:/var/opt/mssql
+      - ./data/smartRideDB.sql:/init.sql
+    restart: unless-stopped
+    entrypoint: >
+      /bin/bash -c "
+      /opt/mssql/bin/sqlservr & 
+      sleep 15 && 
+      /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P MyPassword123. -i /init.sql;
+      wait
+      "
+
+volumes:
+  sql_data:
+    driver: local
