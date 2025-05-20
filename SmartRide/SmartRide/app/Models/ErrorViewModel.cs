@@ -1,4 +1,4 @@
-namespace SmartRide.Models
+namespace Models
 {
     public class ErrorViewModel
     {
