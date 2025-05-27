@@ -1,8 +1,119 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<Models.Account>
+@{
+    ViewData["Title"] = " Your Rides, Made Simple";
 }
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="fw-bold">City Rides, Made Simple.</h1>
+            <p class="text-muted">
+                Book cars or motorbikes in seconds, track your driver in real-time, and pay online.
+                SmartRide connects you with reliable rides — fast, easy, and always there when you need it.
+            </p>
+            <div class="mb-4">
+                <a href="#" class="btn btn-dark me-2">Book a Ride</a>
+                <a href="#" class="btn btn-outline-secondary">Register</a>
+            </div>
+            <div class="d-flex gap-4">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-car-front-fill me-2"></i><span>Cars</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-bicycle me-2"></i><span>Motorbikes</span>
+                </div>
+            </div>
+        </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <div class="col-md-6">
+            <div class="bg-dark text-white text-center rounded p-5 shadow" style="height: 300px;">
+                <p class="lead mb-0">[Ride Booking App Preview]</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="text-center my-5">
+        <h3 class="fw-bold mb-4">Why Choose SmartRide?</h3>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded shadow-sm h-100">
+                    <h5><i class="bi bi-lightning-charge-fill me-2"></i>Instant Booking</h5>
+                    <p class="text-muted">Book rides anytime, anywhere. No calls or waiting in line — just tap and go.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded shadow-sm h-100">
+                    <h5><i class="bi bi-geo-alt-fill me-2"></i>Real-Time Tracking</h5>
+                    <p class="text-muted">See your driver's location and ETA in real time for a stress-free journey.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded shadow-sm h-100">
+                    <h5><i class="bi bi-credit-card-fill me-2"></i>Easy Online Payments</h5>
+                    <p class="text-muted">Pay securely online and get instant receipts. No more cash hassles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center my-5">
+        <h3 class="fw-bold mb-4">How it Works</h3>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-2">
+                <i class="bi bi-person-circle fs-2 mb-2"></i>
+                <p>1. Register Account</p>
+            </div>
+            <div class="col-md-2">
+                <i class="bi bi-map fs-2 mb-2"></i>
+                <p>2. Enter Your Trip</p>
+            </div>
+            <div class="col-md-2">
+                <i class="bi bi-person-check-fill fs-2 mb-2"></i>
+                <p>3. Get Matched</p>
+            </div>
+            <div class="col-md-2">
+                <i class="bi bi-cash-stack fs-2 mb-2"></i>
+                <p>4. Ride & Pay</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="text-center my-5">
+        <h3 class="fw-bold mb-4">What Our Customers Say</h3>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded shadow-sm h-100">
+                    <strong>Jamie R.</strong><br /><small class="text-muted">Customer</small>
+                    <p class="mt-2">“SmartRide saved me so much time during rush hour. Booking and tracking are super simple!”</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded shadow-sm h-100">
+                    <strong>Alex K.</strong><br /><small class="text-muted">Commuter</small>
+                    <p class="mt-2">“I love being able to pay online and get a receipt right away. No more cash confusion!”</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-4 rounded shadow-sm h-100">
+                    <strong>Priya S.</strong><br /><small class="text-muted">Rider</small>
+                    <p class="mt-2">“The real-time tracking is a game-changer. Always know where your driver is!”</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-dark text-white text-center p-5 rounded shadow mt-5">
+        <h3 class="mb-3">Ready to Ride?</h3>
+        <p class="mb-4">Sign up, book your first ride, and experience city travel the smart way with SmartRide.</p>
+        <a href="#" class="btn btn-light me-2">Get Started</a>
+        <a href="#" class="btn btn-outline-light">Learn More</a>
+    </section>
+
+    <footer class="text-center mt-5 text-muted small">
+        <p>&copy; 2025 SmartRide. All rights reserved.</p>
+        <div>
+            <i class="bi bi-instagram me-2"></i>
+            <i class="bi bi-facebook me-2"></i>
+            <i class="bi bi-twitter"></i>
+        </div>
+    </footer>
 </div>

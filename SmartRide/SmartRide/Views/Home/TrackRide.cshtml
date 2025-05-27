@@ -1,0 +1,355 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = " Tracking Ride";
+}
+
+<div class="container py-5 main-dashboard-content">
+    <!-- Left Panel -->
+    <div class="container driver-ride-info-panel">
+        <div class="driver-profile-section">
+            <!-- Using a div as a placeholder for the avatar image to match the UI more closely -->
+            <img src="https://i.imgur.com/3G1N0m1.png" alt="Samuel Carter" class="driver-avatar-img">
+            <h2 class="driver-name">Samuel Carter</h2>
+            <p class="driver-type">Driver, Car</p>
+            <ul class="driver-details-list">
+                <li><span class="icon"><i class="fa-solid fa-star"></i></span> 4.9 <span class="ratings-count">(241 ratings)</span></li>
+                <li><span class="icon"><i class="fa-solid fa-car-side"></i></span> Toyota Camry, Silver <span class="dot-separator">-</span> <span class="license-plate">A123BC</span></li>
+                <li><span class="icon"><i class="fa-solid fa-phone"></i></span> +1 555 123 4567</li>
+            </ul>
+        </div>
+        <hr class="separator">
+        <div class="ride-status-section">
+            <div class="ride-in-progress-bar">
+                <span>Ride in progress</span>
+                <span class="refresh-icon"><i class="fa-solid fa-arrows-rotate"></i></span>
+            </div>
+            <ul class="ride-details-list">
+                <li>
+                    <span class="ride-detail-label">Pickup</span>
+                    <span class="ride-detail-value">123 Elm Street</span>
+                </li>
+                <li>
+                    <span class="ride-detail-label">Drop-off</span>
+                    <span class="ride-detail-value">456 Oak Avenue</span>
+                </li>
+                <li>
+                    <span class="ride-detail-label">ETA</span>
+                    <span class="ride-detail-value">8 min</span>
+                </li>
+                <li>
+                    <span class="ride-detail-label">Fare</span>
+                    <span class="ride-detail-value">$22.50</span>
+                </li>
+            </ul>
+            <button class="contact-driver-button">
+                <span class="icon"><i class="fa-solid fa-phone"></i></span> Contact Driver
+            </button>
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="map-view-panel">
+        <div class="live-map-header">
+            <span class="icon"><i class="fa-solid fa-map-pin"></i></span> Live Map
+        </div>
+        <div class="map-area-wrapper">
+            <div class="map-placeholder-content">
+                <div id="map" data-mode="view" style="height: 400px;"></div>
+            </div>
+            <p class="map-info-text">Driver: near Oak Ave • Updated: 10:24 AM</p>
+            <div class="driver-location-on-map">
+                <span class="icon car-icon-map"><i class="fa-solid fa-car-side"></i></span>
+                <span class="driver-car-label">Samuel's Car</span>
+            </div>
+        </div>
+        <div class="map-controls">
+            <button class="map-button">
+                <span class="icon"><i class="fa-solid fa-compass"></i></span> Center on Driver
+            </button>
+            <button class="map-button">
+                <span class="icon"><i class="fa-solid fa-arrows-rotate"></i></span> Refresh Map
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .main-dashboard-content {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px; /* Max width of the content area */
+        margin: 0 auto; /* Center the content area */
+    }
+
+    /* Left Panel: Driver & Ride Info */
+    .driver-ride-info-panel {
+        flex: 0 0 340px; /* Fixed width for the left panel */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .driver-profile-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .driver-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+        /* In a real app, replace with an actual image path for Samuel Carter's avatar */
+        background-color: #e0e0e0; /* Placeholder background */
+        display: inline-block; /* For placeholder */
+    }
+
+    .driver-avatar-img { /* if using actual img tag */
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+
+    .driver-name {
+        font-size: 22px;
+        font-weight: 600;
+        color: #212529;
+        margin: 0 0 5px 0;
+    }
+
+    .driver-type {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .driver-details-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
+
+        .driver-details-list li {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+            .driver-details-list li .icon {
+                margin-right: 10px;
+                font-size: 16px;
+                color: #495057; /* Icon color consistent with text */
+            }
+
+    .ratings-count, .license-plate {
+        color: #868e96;
+        margin-left: 4px;
+    }
+
+    .dot-separator {
+        margin: 0 5px;
+        color: #868e96;
+    }
+
+
+    .separator {
+        border: none;
+        border-top: 1px solid #e9ecef;
+        margin: 20px 0;
+    }
+
+    .ride-status-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ride-in-progress-bar {
+        background-color: #343a40;
+        color: #fff;
+        padding: 12px 15px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+        .ride-in-progress-bar .refresh-icon {
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+    .ride-details-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+        .ride-details-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+            .ride-details-list li:not(:last-child) {
+                border-bottom: 1px solid #f1f3f5;
+            }
+
+    .ride-detail-label {
+        color: #6c757d;
+    }
+
+    .ride-detail-value {
+        color: #343a40;
+        font-weight: 500;
+    }
+
+    .contact-driver-button {
+        background-color: #f8f9fa;
+        color: #343a40;
+        border: 1px solid #dee2e6;
+        padding: 12px;
+        width: 100%;
+        border-radius: 6px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: background-color 0.2s ease;
+    }
+
+        .contact-driver-button:hover {
+            background-color: #e9ecef;
+        }
+
+        .contact-driver-button .icon {
+            font-size: 16px;
+        }
+
+    /* Right Panel: Map View */
+    .map-view-panel {
+        flex: 1; /* Takes remaining space */
+        display: flex;
+        flex-direction: column;
+        background-color: #fff; /* Panel background */
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow: hidden; /* For child border-radius on top */
+    }
+
+    .live-map-header {
+        background-color: #343a40;
+        color: #fff;
+        padding: 10px 15px;
+        font-weight: 500;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .live-map-header .icon {
+            font-size: 18px;
+        }
+
+    .map-area-wrapper {
+        background-color: #adb5bd; /* Main map area background */
+        flex-grow: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative; /* For absolute positioning if needed for map elements */
+    }
+
+    .map-placeholder-content {
+        background-color: inherit; /* Darker placeholder box */
+        color: white;
+        padding: 50px 80px; /* Make it a noticeable box */
+        border-radius: 8px;
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .map-info-text {
+        font-size: 13px;
+        color: #f8f9fa; /* Light text on the gray map background */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .driver-location-on-map {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .driver-location-on-map .car-icon-map {
+            font-size: 30px; /* Larger car icon */
+            color: #fff; /* White car icon on gray background */
+            margin-bottom: 5px;
+        }
+
+    .driver-car-label {
+        background-color: #343a40;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .map-controls {
+        display: flex;
+        gap: 10px;
+        padding: 15px; /* Padding around buttons, on white panel background */
+        background-color: #fff; /* Controls area has white background */
+        border-top: 1px solid #e9ecef; /* Separator from map */
+    }
+
+    .map-button {
+        background-color: #fff;
+        color: #343a40;
+        border: 1px solid #ced4da;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+
+        .map-button:hover {
+            background-color: #f8f9fa;
+        }
+
+        .map-button .icon {
+            font-size: 16px;
+        }
+
+</style>
