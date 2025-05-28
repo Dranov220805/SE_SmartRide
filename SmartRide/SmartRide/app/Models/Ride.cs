@@ -15,8 +15,8 @@ namespace Models
         public Guid DropoffLocationId { get; set; }
 
         public string? Status { get; set; }
-        public string UserEmail { get; set; }
-        public string PickupDate { get; set; }
+        public string? UserEmail { get; set; }
+        public string? PickupDate { get; set; }
 
         // Navigation properties
         public virtual Location PickupLocation { get; set; }

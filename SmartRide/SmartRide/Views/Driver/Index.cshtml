@@ -34,20 +34,19 @@
         {
             foreach (var ride in Model)
             {
-                var vehicleIcon = ride.Status == "Motorbike" ? "🛵" : "🚗"; // Adjust this if you have vehicle type separately
-                var passengerName = ride.UserEmail ?? "Unknown"; // Adjust if your Location includes passenger info
+                var passengerName = ride.UserEmail ?? "Unknown";
                 <div class="ride-card">
                     <div class="ride-card-main-info">
-                        <div class="vehicle-icon">@vehicleIcon</div>
+                        <div class="vehicle-icon"><i class="fa-solid fa-car-side"></i></div>
                         <div class="ride-text-details">
                             <div class="vehicle-type-status">@ride.Status <span class="status-tag">Pending</span></div>
                             <div class="passenger-name">@passengerName</div>
-                            <div class="route-info"><span class="icon">📍</span> @ride.PickupLocation → @ride.DropoffLocation</div>
+                            <div class="route-info"><span class="icon"><i class="fa-solid fa-map-pin"></i></span> @ride.PickupLocation → @ride.DropoffLocation</div>
                         </div>
                     </div>
                     <div class="ride-card-actions">
-                        <div class="time-info"><span class="icon">🕒</span> 12:30 PM</div> <!-- Consider adding datetime if Ride includes it -->
-                        <div class="price-info"><span class="icon">💵</span> $10.00</div> <!-- Replace with real price -->
+                        <div class="time-info"><span class="icon"><i class="fa-solid fa-clock"></i></span> 12:30 PM</div> <!-- Consider adding datetime if Ride includes it -->
+                        <div class="price-info"><span class="icon"><i class="fa-solid fa-money-bills"></i></span> $10.00</div> <!-- Replace with real price -->
                         <a href="/Rides/Accept/@ride.RideId" class="accept-button">Accept Ride</a>
                     </div>
                 </div>
