@@ -26,16 +26,16 @@ namespace Services
             return result == PasswordVerificationResult.Success ? account : null;
         }
 
-        public async Task<RegAccount?> CreateAccountAsync(RegAccount regAccount)
+        public async Task<Account?> CreateAccountAsync(Account regAccount)
         {
             if (regAccount == null)
                 return null;
 
             var username = regAccount.UserName;
             var plainPassword = regAccount.Password;
-            var customerName = regAccount.Customer?.CustomerName;
-            var phone = regAccount.Customer?.Phone;
-            var email = regAccount.Customer?.Email;
+            var customerName = regAccount?.UserName;
+            var phone = regAccount?.Phone;
+            var email = regAccount?.Email;
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(plainPassword) ||
                 string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(phone) ||
@@ -59,10 +59,11 @@ namespace Services
             };
 
             regAccount.AccountId = accountId;
+            regAccount.UserName = customerName;
             regAccount.Email = email;
+            regAccount.Phone = phone;
             regAccount.Password = _passwordHasher.HashPassword(null!, plainPassword);
             regAccount.Role = "customer";
-            regAccount.Customer = customer;
 
             await _accountRepository.AddAccountAsync(regAccount);
             return regAccount;

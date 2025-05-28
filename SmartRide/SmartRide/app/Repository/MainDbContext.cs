@@ -33,17 +33,23 @@ namespace Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Ride: Pickup and Dropoff Locations
-            modelBuilder.Entity<Ride>()
-                .HasOne<Location>()
-                .WithMany()
-                .HasForeignKey(r => r.PickupLocation)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Ride>()
+            //    .HasMany(r => r.Locations)
+            //    .WithMany(l => l.Rides);
 
             modelBuilder.Entity<Ride>()
-                .HasOne<Location>()
+                .HasOne(r => r.PickupLocation)
                 .WithMany()
-                .HasForeignKey(r => r.DropoffLocation)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(r => r.PickupLocationId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            modelBuilder.Entity<Ride>()
+                .HasOne(r => r.DropoffLocation)
+                .WithMany()
+                .HasForeignKey(r => r.DropoffLocationId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
 
             // Payment: Ride
             modelBuilder.Entity<Payment>()
@@ -59,6 +65,11 @@ namespace Repository
                 .HasForeignKey(r => r.ManagerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.Account)
+                .WithMany()
+                .HasForeignKey(c => c.AccountId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

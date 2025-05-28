@@ -1,10 +1,10 @@
-﻿//using Models;
+﻿using Models;
 
-//namespace Interface
-//{
-//    public interface IAccountService
-//    {
-//        List<Account> GetAllAccounts();
-//    }
+namespace Interface
+{
+    public interface IAccountService
+    {
+        List<Account> GetAllAccounts();
+    }
 
-//}
+}

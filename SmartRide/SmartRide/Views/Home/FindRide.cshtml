@@ -1,0 +1,160 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="success-container container py-5 mt-5">
+    <div class="success-icon-wrapper">
+        <span class="icon"><i class="fa-solid fa-circle-check"></i></span>
+    </div>
+    <h1>Request success</h1>
+    <p class="subtitle">Your riding request have been sent. We are finding a driver suitable for you.</p>
+
+    <div class="receipt-details">
+        <div class="detail-item">
+            <span class="detail-label">Amount Paid</span>
+            <span class="detail-value amount">$24.80</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Payment Method</span>
+            <span class="detail-value">Visa **** 2341</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Date</span>
+            <span class="detail-value">May 23, 2025</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Ride Reference</span>
+            <span class="detail-value">SR925183</span>
+        </div>
+    </div>
+
+    <form action="#">
+        <button type="submit" class="action-button button-primary" asp-controller="Home" asp-action="Index">
+            Back to Home
+        </button>
+    </form>
+</div>
+
+<style>
+
+    .success-container {
+        background-color: #fff;
+        padding: 40px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 420px; /* Control the width of the confirmation box */
+        text-align: center; /* Center align text and inline elements */
+    }
+
+    .success-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background-color: #212529; /* Dark background for icon */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 25px auto; /* Center the icon wrapper */
+    }
+
+        .success-icon-wrapper .icon {
+            font-size: 40px; /* Adjust size of checkmark */
+            color: #fff; /* White checkmark */
+        }
+
+    .success-container h1 {
+        font-size: 26px;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #212529;
+    }
+
+    .success-container .subtitle {
+        font-size: 15px;
+        color: #495057;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .receipt-details {
+        background-color: #f8f9fa; /* Light gray background for details box */
+        padding: 20px;
+        border-radius: 6px;
+        text-align: left; /* Align text to the left within this box */
+        margin-bottom: 30px;
+    }
+
+        .receipt-details .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 15px;
+        }
+
+            .receipt-details .detail-item:not(:last-child) {
+                border-bottom: 1px solid #e9ecef; /* Subtle separator */
+            }
+
+        .receipt-details .detail-label {
+            color: #6c757d; /* Gray for labels */
+        }
+
+        .receipt-details .detail-value {
+            color: #212529; /* Darker for values */
+            font-weight: 500;
+        }
+
+            .receipt-details .detail-value.amount {
+                font-size: 18px; /* Larger font for amount */
+                font-weight: 600;
+            }
+
+
+    .action-button {
+        width: 100%;
+        padding: 14px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px; /* Space for icon if any */
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        box-sizing: border-box; /* Ensure padding doesn't increase width */
+    }
+
+    .button-primary {
+        background-color: #212529; /* Dark button */
+        color: #fff;
+        border: 1px solid #212529;
+        margin-bottom: 15px; /* Space between buttons */
+    }
+
+        .button-primary:hover {
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+    .button-secondary {
+        background-color: #fff;
+        color: #212529;
+        border: 1px solid #ced4da; /* Light gray border */
+    }
+
+        .button-secondary:hover {
+            background-color: #f8f9fa; /* Slight hover effect */
+            border-color: #adb5bd;
+        }
+
+        .button-secondary .icon {
+            font-size: 16px; /* Icon size for download button */
+            margin-right: 6px;
+        }
+
+</style>

@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Interface;
 using Services;
 using Models;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace Controllers
 {
@@ -32,65 +33,83 @@ namespace Controllers
 
         [RedirectLoggedInUser]
         [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login([FromBody] Account request)
         {
+            var email = request.Email;
+            var password = request.Password;
+
             var account = await _authService.CheckAccountAsync(email, password);
             if (account != null)
             {
                 var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, email),
-            new Claim(ClaimTypes.Role, account.Role)
-        };
+                {
+                    new Claim(ClaimTypes.Name, email),
+                    new Claim(ClaimTypes.Role, account.Role)
+                };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                // Redirect based on role
-                if (account.Role == "manager")
+                string redirectUrl = account.Role switch
                 {
-                    return RedirectToAction("Index", "Admin");
-                }
-
-                return RedirectToAction("Index", "Home");
+                    "manager" => Url.Action("Index", "Admin"),
+                    "driver" => Url.Action("Index", "Driver"),
+                    _ => Url.Action("Index", "Home")
+                };
+               
+                return Json(new { 
+                    success = true,
+                    redirectUrl,
+                    user = new
+                    {
+                        id = account.AccountId,
+                        username = account.UserName,
+                        email = account.Email
+                    }
+                });
             }
 
-            ViewBag.Error = "Invalid login";
-            return View();
+            return BadRequest(new { 
+                success = false, 
+                error = "Invalid login" 
+            });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody] Account model)
         {
-            if (!ModelState.IsValid)
+            var account = new Account
             {
-                return View(model); // Return with validation errors
-            }
-
-            var account = new RegAccount
-            {
-                UserName = model.FullName,
-                Password = model.Password, // Hash in service
-                Role = "User",
-                Customer = new Customer
-                {
-                    CustomerId = Guid.NewGuid(),
-                    CustomerName = model.FullName,
-                    Phone = model.PhoneNumber,
-                    Email = model.EmailAddress
-                }
+                UserName = model.UserName,
+                Password = model.Password,
+                Phone = model.Phone,
+                Email = model.Email,
+                Role = "User"
             };
 
             var createdAccount = await _authService.CreateAccountAsync(account);
 
             if (createdAccount != null)
             {
-                // You can redirect to login or dashboard
-                return RedirectToAction("Login");
+                string redirectUrl = Url.Action("Login", "Log");
+                return Json(new
+                {
+                    success = true,
+                    redirectUrl,
+                    user = new
+                    {
+                        id = account.AccountId,
+                        username = account.UserName,
+                        email = account.Email,
+                        phone = account.Phone
+                    }
+                });
             }
 
-            ModelState.AddModelError("", "Username already exists.");
-            return View(model);
+            return BadRequest(new { 
+                success = false, 
+                error = "Invalid register" 
+            });
         }
 
 

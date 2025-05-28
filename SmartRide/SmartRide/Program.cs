@@ -17,11 +17,18 @@ builder.Services.AddDbContext<MainDbContext>(options =>
 // Add scoped services
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRideService, RideService>();
+builder.Services.AddScoped<IDriverService, DriverService>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher<Models.Account>, PasswordHasher<Models.Account>>();
 
 
 // Add scoped repository
 builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<DriverRepository>();
+builder.Services.AddScoped<HomeRepository>();
+builder.Services.AddScoped<ManagerRepository>();
+builder.Services.AddScoped<RideRepository>();
 
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

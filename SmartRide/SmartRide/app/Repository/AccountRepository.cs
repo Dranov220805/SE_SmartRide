@@ -21,7 +21,7 @@ namespace Repository
             return await _context.Accounts
                 .FirstOrDefaultAsync(a => a.Email == email);
         }
-        public async Task AddAccountAsync(RegAccount account)
+        public async Task AddAccountAsync(Account account)
         {
             var existingAccount = await GetAccountByEmailAsync(account.Email);
             if (existingAccount != null)
@@ -33,22 +33,13 @@ namespace Repository
             {
                 AccountId = Guid.NewGuid(),
                 Email = account.Email,
+                Phone = account?.Phone,
                 UserName = account.UserName,
                 Password = account.Password, // Assuming password is already hashed
                 Role = account.Role ?? "customer" // Default role if not specified
             };
 
-            var customer = new Customer
-            {
-                CustomerId = Guid.NewGuid(),
-                AccountId = newAccount.AccountId,
-                CustomerName = account.Customer?.CustomerName,
-                Phone = account.Customer?.Phone,
-                Email = account.Customer?.Email
-            };
-
             _context.Accounts.Add(newAccount);
-            _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
         }
 

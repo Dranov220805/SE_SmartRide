@@ -10,20 +10,26 @@
         <h1>Book a Ride</h1>
         <p class="subtitle">Enter your pickup and destination addresses below</p>
 
-        <form action="#">
+        <form id="bookingRideForm" onsubmit="return false;">
             <div class="form-group">
                 <label for="pickupAddress">Pick-up Address</label>
-                <div class="input-with-icon">
+                <div class="input-with-icon mb-2">
                     <span class="icon"><i class="fa-solid fa-map-pin"></i></span>
                     <input type="text" id="pickupAddress" name="pickupAddress" placeholder="Enter pick-up location">
                 </div>
+                <button id="useMyLocationBtn" type="button" class="btn btn-outline-primary btn-sm">
+                    Use My Current Location
+                </button>
+                <input type="hidden" id="pickupLatitude" name="PickupLatitude">
+                <input type="hidden" id="pickupLongitude" name="PickupLongitude">
             </div>
-
             <div class="form-group">
                 <label for="destinationAddress">Destination Address</label>
+                <input type="hidden" id="latitude" name="Latitude">
+                <input type="hidden" id="longitude" name="Longitude">
                 <div class="input-with-icon">
                     <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span> <!-- Using paper plane for destination -->
-                    <input type="text" id="destinationAddress" name="destinationAddress" placeholder="Enter destination">
+                    <input type="text" id="destinationAddress" name="destinationAddress" placeholder="Enter destination or select a location on the map">
                 </div>
             </div>
 
@@ -32,8 +38,8 @@
                 <div id="map" data-mode="select" style="height: 400px;"></div>
             </div>
 
-            <button type="submit" class="book-ride-button">
-                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span> Book Ride
+            <button type="submit" class="book-ride-button" asp-controller="Home" asp-action="FindRide">
+                <span class="icon"><i class="fa-solid fa-map-location-dot"></i></span> Find Driver
             </button>
         </form>
     </div>

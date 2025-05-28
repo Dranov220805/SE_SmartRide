@@ -9,6 +9,7 @@
         public bool Availability { get; set; }
         public string? AccountId { get; set; }
         public virtual Account Account { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
     }
 
 }

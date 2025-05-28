@@ -24,23 +24,39 @@ namespace Controllers
             _logger = new LoggerFactory().CreateLogger<HomeController>();
         }
 
+        [Authorize(Roles = "customer")]
         public IActionResult Index()
         {
             var accounts = _homeService.GetAllAccounts();
-            return View(accounts);
+            return View();
         }
 
+        [Authorize(Roles = "customer")]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [Authorize(Roles = "customer")]
         public IActionResult TrackRide()
         {
             return View();
         }
 
+        [Authorize(Roles = "customer")]
         public IActionResult BookRide()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "customer")]
+        public IActionResult Preference()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "customer")]
+        public IActionResult FindRide()
         {
             return View();
         }

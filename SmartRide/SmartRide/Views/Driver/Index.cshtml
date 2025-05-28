@@ -1,0 +1,251 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model IEnumerable<Models.Ride>
+
+@{
+	ViewData["Title"] = "Driver Page";
+}
+
+@{
+    ViewData["Title"] = "Pending Rides";
+    // In a real application, you would likely have a Model containing a list of pending rides.
+    // For this static example, the data is hardcoded in the HTML.
+}
+
+<div class="pending-rides-container">
+    <div class="page-header">
+        <h1>Pending Rides</h1>
+        <p class="subtitle">See your current ride requests awaiting action</p>
+    </div>
+
+    <div class="filters-toolbar">
+        <input type="text" class="search-input" placeholder="Search by pickup or passenger" />
+        <select class="filter-select">
+            <option value="all">All</option>
+            <option value="car">Car</option>
+            <option value="motorbike">Motorbike</option>
+        </select>
+    </div>
+
+    <div class="ride-list">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var ride in Model)
+            {
+                var vehicleIcon = ride.Status == "Motorbike" ? "🛵" : "🚗"; // Adjust this if you have vehicle type separately
+                var passengerName = ride.UserEmail ?? "Unknown"; // Adjust if your Location includes passenger info
+                <div class="ride-card">
+                    <div class="ride-card-main-info">
+                        <div class="vehicle-icon">@vehicleIcon</div>
+                        <div class="ride-text-details">
+                            <div class="vehicle-type-status">@ride.Status <span class="status-tag">Pending</span></div>
+                            <div class="passenger-name">@passengerName</div>
+                            <div class="route-info"><span class="icon">📍</span> @ride.PickupLocation → @ride.DropoffLocation</div>
+                        </div>
+                    </div>
+                    <div class="ride-card-actions">
+                        <div class="time-info"><span class="icon">🕒</span> 12:30 PM</div> <!-- Consider adding datetime if Ride includes it -->
+                        <div class="price-info"><span class="icon">💵</span> $10.00</div> <!-- Replace with real price -->
+                        <a href="/Rides/Accept/@ride.RideId" class="accept-button">Accept Ride</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No pending rides available.</p>
+        }
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        background-color: #f0f0f0; /* Light gray page background */
+        color: #333333; /* Default dark gray text */
+        margin: 0;
+        padding: 20px;
+    }
+
+    .pending-rides-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background-color: #ffffff; /* White background for the main content block */
+        padding: 25px;
+        border-radius: 8px;
+        /* box-shadow: 0 2px 5px rgba(0,0,0,0.05); */ /* Subtle shadow if desired, or remove for flatter look */
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+        font-weight: 600;
+        color: #000000; /* Black title */
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+
+    .page-header .subtitle {
+        font-size: 15px;
+        color: #555555; /* Medium gray subtitle */
+        margin-bottom: 25px;
+    }
+
+    .filters-toolbar {
+        display: flex;
+        justify-content: flex-end; /* Align items to the right */
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 15px; /* Space between filter elements */
+    }
+
+        .filters-toolbar .search-input {
+            padding: 9px 12px;
+            border: 1px solid #cccccc; /* Gray border */
+            border-radius: 5px;
+            font-size: 14px;
+            width: 280px; /* Adjust width as needed */
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+            .filters-toolbar .search-input::placeholder {
+                color: #999999; /* Lighter gray for placeholder */
+            }
+
+        .filters-toolbar .filter-select {
+            padding: 9px 12px;
+            border: 1px solid #cccccc; /* Gray border */
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: #333333;
+            min-width: 90px; /* Adjust width as needed */
+            appearance: none; /* Basic reset for select */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23555555%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: .6em auto;
+            padding-right: 30px;
+        }
+
+    .ride-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Space between ride cards */
+    }
+
+    .ride-card {
+        background-color: #f9f9f9; /* Very light gray for cards */
+        border: 1px solid #dddddd; /* Gray border for cards */
+        border-radius: 6px;
+        padding: 18px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ride-card-main-info {
+        display: flex;
+        align-items: center;
+        gap: 18px; /* Space between icon and text details */
+    }
+
+        .ride-card-main-info .vehicle-icon {
+            font-size: 28px; /* Adjust icon size as needed */
+            color: #333333; /* Dark gray icon */
+            min-width: 30px; /* Ensure space for icon */
+            text-align: center;
+        }
+
+        .ride-card-main-info .ride-text-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+    .ride-text-details .vehicle-type-status {
+        font-size: 14px;
+        font-weight: 600;
+        color: #000000; /* Black for vehicle type */
+        margin-bottom: 3px;
+    }
+
+    .ride-text-details .status-tag {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: normal;
+        padding: 2px 7px;
+        border-radius: 4px;
+        background-color: #e0e0e0; /* Light gray tag background */
+        color: #333333; /* Dark gray tag text */
+        margin-left: 8px;
+        border: 1px solid #cccccc; /* Slightly darker border for tag */
+        vertical-align: middle;
+    }
+
+    .ride-text-details .passenger-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #000000; /* Black for name */
+        margin-bottom: 5px;
+    }
+
+    .ride-text-details .route-info {
+        font-size: 13px;
+        color: #555555; /* Medium gray for route */
+        display: flex;
+        align-items: center;
+    }
+
+        .ride-text-details .route-info .icon {
+            margin-right: 6px;
+            color: #555555;
+        }
+
+    .ride-card-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px; /* Space between time, price, and button */
+        text-align: right;
+    }
+
+        .ride-card-actions .time-info,
+        .ride-card-actions .price-info {
+            font-size: 14px;
+            color: #333333; /* Dark gray for time/price text */
+            display: flex;
+            align-items: center;
+        }
+
+            .ride-card-actions .time-info .icon,
+            .ride-card-actions .price-info .icon {
+                margin-right: 6px;
+                color: #333333;
+            }
+
+        .ride-card-actions .price-info {
+            font-weight: 600; /* Make price bold */
+        }
+
+        .ride-card-actions .accept-button {
+            background-color: #333333; /* Dark gray button */
+            color: #ffffff; /* White text */
+            border: none;
+            padding: 9px 18px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 5px; /* Space above button */
+            display: inline-block;
+        }
+
+            .ride-card-actions .accept-button:hover {
+                background-color: #555555; /* Slightly lighter dark gray on hover */
+            }
+
+</style>

@@ -1,0 +1,291 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="payment-container">
+    <h1>Process Payment</h1>
+    <p class="subtitle">Select your preferred payment method and enter the required information to complete your ride payment.</p>
+
+    <form id="paymentForm" action="#" method="POST">
+        <h2 class="section-title">Select Payment Method</h2>
+        <div class="payment-methods">
+            <label class="payment-method selected" for="paymentCard" id="cardMethodLabel">
+                <input type="radio" id="paymentCard" name="paymentMethod" value="card" checked>
+                <span class="icon">💳</span>
+                <span>Credit / Debit Card</span>
+            </label>
+            <label class="payment-method" for="paymentPaypal" id="paypalMethodLabel">
+                <input type="radio" id="paymentPaypal" name="paymentMethod" value="paypal">
+                <span class="icon">🅿️</span> <!-- Simple P for PayPal icon placeholder -->
+                <span>PayPal</span>
+            </label>
+        </div>
+
+        <div id="cardDetailsSection">
+            <h2 class="section-title">Payment Details</h2>
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvc">CVC</label>
+                    <input type="text" id="cvc" name="cvc" placeholder="123" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cardholderName">Cardholder Name</label>
+                <input type="text" id="cardholderName" name="cardholderName" placeholder="Full Name" required>
+            </div>
+        </div>
+
+        <button type="submit" class="confirm-button">
+            <span class="icon">🔒</span> Confirm Payment
+        </button>
+    </form>
+
+    <div class="security-info">
+        <span class="icon">🛡️</span> Your payment is secure and encrypted.
+    </div>
+</div>
+
+<script>
+    const paymentCardRadio = document.getElementById('paymentCard');
+    const paymentPaypalRadio = document.getElementById('paymentPaypal');
+    const cardDetailsSection = document.getElementById('cardDetailsSection');
+    const cardMethodLabel = document.getElementById('cardMethodLabel');
+    const paypalMethodLabel = document.getElementById('paypalMethodLabel');
+
+    function updatePaymentMethodView() {
+        if (paymentCardRadio.checked) {
+            cardDetailsSection.classList.remove('hidden');
+            cardMethodLabel.classList.add('selected');
+            paypalMethodLabel.classList.remove('selected');
+            // Enable card fields for validation
+            document.getElementById('cardNumber').required = true;
+            document.getElementById('expiryDate').required = true;
+            document.getElementById('cvc').required = true;
+            document.getElementById('cardholderName').required = true;
+        } else if (paymentPaypalRadio.checked) {
+            cardDetailsSection.classList.add('hidden');
+            cardMethodLabel.classList.remove('selected');
+            paypalMethodLabel.classList.add('selected');
+             // Disable card fields if PayPal is selected
+            document.getElementById('cardNumber').required = false;
+            document.getElementById('expiryDate').required = false;
+            document.getElementById('cvc').required = false;
+            document.getElementById('cardholderName').required = false;
+        }
+    }
+
+    paymentCardRadio.addEventListener('change', updatePaymentMethodView);
+    paymentPaypalRadio.addEventListener('change', updatePaymentMethodView);
+
+    // Initial call to set the correct view
+    updatePaymentMethodView();
+
+    // Handle form submission
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent actual submission for this demo
+        if (paymentCardRadio.checked) {
+            // Basic validation for card details (can be expanded)
+            if (document.getElementById('cardNumber').value &&
+                document.getElementById('expiryDate').value &&
+                document.getElementById('cvc').value &&
+                document.getElementById('cardholderName').value) {
+                alert('Processing Card Payment...');
+            } else {
+                alert('Please fill in all card details.');
+                return;
+            }
+        } else if (paymentPaypalRadio.checked) {
+            alert('Redirecting to PayPal...');
+        }
+        // Here you would typically send the data to a server
+    });
+</script>
+
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        background-color: #f0f2f5; /* Light gray background for the page */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align to top for longer content */
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px; /* Padding around the payment form */
+        color: #212529; /* Default text color */
+    }
+
+    .payment-container {
+        background-color: #fff;
+        padding: 35px 30px; /* More vertical padding */
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 480px; /* Control the width of the form */
+    }
+
+        .payment-container h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #212529;
+        }
+
+        .payment-container .subtitle {
+            font-size: 15px;
+            color: #495057; /* Slightly darker gray for readability */
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #212529;
+    }
+
+    .payment-methods {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .payment-method {
+        flex: 1;
+        padding: 12px 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        background-color: #f8f9fa; /* Default light gray background */
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+        .payment-method.selected {
+            border-color: #495057; /* Darker border for selected */
+            background-color: #fff; /* White background for selected */
+        }
+
+        .payment-method:not(.selected):hover {
+            border-color: #adb5bd;
+        }
+
+
+        .payment-method input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #212529; /* Color for the radio button dot */
+            /* For more custom styling of radio, would need to hide default and style a span */
+        }
+
+        .payment-method .icon {
+            margin-right: 8px;
+            font-size: 20px; /* Icon size */
+            color: #495057;
+        }
+
+        .payment-method span {
+            font-size: 15px;
+            font-weight: 500;
+            color: #343a40;
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+            color: #495057;
+            background-color: #f8f9fa; /* Light gray background for inputs */
+        }
+
+            .form-group input[type="text"]::placeholder {
+                color: #868e96; /* Lighter placeholder text */
+            }
+
+            .form-group input[type="text"]:focus {
+                outline: none;
+                border-color: #495057;
+                background-color: #fff;
+                box-shadow: 0 0 0 0.1rem rgba(73, 80, 87, 0.25);
+            }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+    }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+    .confirm-button {
+        width: 100%;
+        background-color: #212529; /* Dark button */
+        color: #fff;
+        padding: 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* Space for icon */
+        margin-top: 10px; /* Space above button */
+        transition: background-color 0.2s ease;
+    }
+
+        .confirm-button:hover {
+            background-color: #343a40; /* Slightly lighter dark */
+        }
+
+        .confirm-button .icon {
+            font-size: 16px;
+        }
+
+    .security-info {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+        .security-info .icon {
+            font-size: 16px;
+        }
+
+    /* Hide payment details by default if needed via JS */
+    .hidden {
+        display: none;
+    }
+</style>
