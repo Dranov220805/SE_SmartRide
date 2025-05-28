@@ -41,7 +41,7 @@
                         <div class="ride-text-details">
                             <div class="vehicle-type-status">@ride.Status <span class="status-tag">Pending</span></div>
                             <div class="passenger-name">@passengerName</div>
-                            <div class="route-info"><span class="icon"><i class="fa-solid fa-map-pin"></i></span> @ride.PickupLocation → @ride.DropoffLocation</div>
+                            <div class="route-info"><span class="icon"><i class="fa-solid fa-map-pin"></i></span> @ride.PickupLocation.Address <i class="fa-solid fa-arrow-right"></i> @ride.DropoffLocation.Address</div>
                         </div>
                     </div>
                     <div class="ride-card-actions">
