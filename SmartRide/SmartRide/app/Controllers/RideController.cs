@@ -52,11 +52,18 @@ namespace Controllers
                 DropoffLocationId = dropoff.LocationId,
                 Status = "Pending",
                 UserEmail = ride.UserEmail,
-                PickupDate = ride.PickupDate,
                 PickupLocation = pickup,
                 DropoffLocation = dropoff
             };
-
+            var checkExistRide = await _rideService.GetbookRideByEmailAsync(ride.UserEmail);
+            if (checkExistRide != null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "You already have a ride booked."
+                });
+            }
             var result = await _rideService.CreateBookRideAsync(newRide, pickup, dropoff);
             if (result != null)
             {

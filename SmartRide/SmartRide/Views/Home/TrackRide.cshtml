@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model Models.Ride;
 @{
     ViewData["Title"] = " Tracking Ride";
 }
@@ -8,45 +9,52 @@
 <div class="container py-5 main-dashboard-content">
     <!-- Left Panel -->
     <div class="container driver-ride-info-panel">
-        <div class="driver-profile-section">
-            <!-- Using a div as a placeholder for the avatar image to match the UI more closely -->
-            <i class="driver-avatar-img fa-solid fa-user-tie" style="font-size: 60px; margin-bottom: 0px; margin-top: 20px"></i>
-            <h2 class="driver-name">Samuel Carter</h2>
-            <p class="driver-type">Driver, Car</p>
-            <ul class="driver-details-list">
-                <li><span class="icon"><i class="fa-solid fa-star"></i></span> 4.9 <span class="ratings-count">(241 ratings)</span></li>
-                <li><span class="icon"><i class="fa-solid fa-car-side"></i></span> Toyota Camry, Silver <span class="dot-separator">-</span> <span class="license-plate">A123BC</span></li>
-                <li><span class="icon"><i class="fa-solid fa-phone"></i></span> +1 555 123 4567</li>
-            </ul>
-        </div>
-        <hr class="separator">
-        <div class="ride-status-section">
-            <div class="ride-in-progress-bar">
-                <span>Ride in progress</span>
-                <span class="refresh-icon"><i class="fa-solid fa-arrows-rotate"></i></span>
+        @if (Model != null)
+        {
+            <div class="driver-profile-section">
+                <i class="driver-avatar-img fa-solid fa-user-tie" style="font-size: 60px;"></i>
+                <h2 class="driver-name">@Model.UserEmail</h2>
+                <p class="driver-type">Driver, Car</p>
+                <ul class="driver-details-list">
+                    <li><span class="icon"><i class="fa-solid fa-star"></i></span> 4.9 <span class="ratings-count">(241 ratings)</span></li>
+                    <li>
+                        <span class="icon"><i class="fa-solid fa-car-side"></i></span> Toyota Camry, Silver
+                        <span class="dot-separator">-</span> <span class="license-plate">A123BC</span>
+                    </li>
+                    <li><span class="icon"><i class="fa-solid fa-phone"></i></span> +1 555 123 4567</li>
+                </ul>
             </div>
-            <ul class="ride-details-list">
-                <li>
-                    <span class="ride-detail-label">Pickup</span>
-                    <span class="ride-detail-value">123 Elm Street</span>
-                </li>
-                <li>
-                    <span class="ride-detail-label">Drop-off</span>
-                    <span class="ride-detail-value">456 Oak Avenue</span>
-                </li>
-                <li>
-                    <span class="ride-detail-label">ETA</span>
-                    <span class="ride-detail-value">8 min</span>
-                </li>
-                <li>
-                    <span class="ride-detail-label">Fare</span>
-                    <span class="ride-detail-value">$22.50</span>
-                </li>
-            </ul>
-            <button class="contact-driver-button">
-                <span class="icon"><i class="fa-solid fa-phone"></i></span> Contact Driver
-            </button>
-        </div>
+
+            <hr class="separator">
+
+            <div class="ride-status-section">
+                <div class="ride-in-progress-bar">
+                    <span>@Model.Status</span>
+                    <span class="refresh-icon"><i class="fa-solid fa-arrows-rotate"></i></span>
+                </div>
+                <ul class="ride-details-list">
+                    <li>
+                        <span class="ride-detail-label">Pickup</span>
+                        <span class="ride-detail-value">@Model.PickupLocation?.Address</span>
+                    </li>
+                    <li>
+                        <span class="ride-detail-label">Drop-off</span>
+                        <span class="ride-detail-value">@Model.DropoffLocation?.Address</span>
+                    </li>
+                    <li>
+                        <span class="ride-detail-label">Pickup Time</span>
+                        <span class="ride-detail-value">@Model.PickupDate</span>
+                    </li>
+                </ul>
+                <button class="contact-driver-button">
+                    <span class="icon"><i class="fa-solid fa-phone"></i></span> Contact Driver
+                </button>
+            </div>
+        }
+        else
+        {
+            <p>No ride data available.</p>
+        }
     </div>
 
     <!-- Right Panel -->

@@ -340,6 +340,10 @@
 
                 if (response.ok) {
                     const result = await response.json();
+                    if (result.success === false) {
+                        showError(result.error || "Booking failed");
+                        return;
+                    }
                     // Do something on success, e.g. redirect or alert
                     console.log(result);
                     alert("Ride booked successfully!");
@@ -371,6 +375,56 @@
             bookingRideForm.appendChild(div);
         }
     }
+
+    const acceptButtons = document.querySelectorAll(".accept-button");
+    acceptButtons.forEach(button => {
+        button.addEventListener("click", async function (e) {
+            e.preventDefault();
+
+            const rideId = this.dataset.rideId;
+            const userEmail = this.dataset.userEmail;
+
+            if (!rideId || !userEmail) {
+                alert("Missing ride or user information.");
+                return;
+            }
+
+            overlay && (overlay.style.display = "flex");
+
+            try {
+                const response = await fetch("/Driver/TakeRide", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        RideId: rideId,
+                        UserEmail: userEmail
+                    })
+                });
+
+                overlay && (overlay.style.display = "none");
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    if (result.success == true) {
+                        alert("Ride successfully assigned to you!");
+                        window.location.reload();
+                    } else {
+                        console.error(result.results);
+                    }
+                } else {
+                    alert(result.message || "Failed to assign ride.");
+                }
+
+            } catch (err) {
+                overlay && (overlay.style.display = "none");
+                console.error(err);
+                alert("An error occurred: " + err.message);
+            }
+        });
+    });
 
     function showError(message) {
         const container = document.querySelector(".error-message-container");

@@ -54,6 +54,17 @@ namespace Repository
 
             return ride;
         }
+        public async Task<Ride> GetbookRideByEmailAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+            return await _context.Rides
+                .Include(r => r.PickupLocation)
+                .Include(r => r.DropoffLocation)
+                .FirstOrDefaultAsync(r => r.UserEmail == email);
+        }
 
         public async Task<bool> CancelRideAsync(Guid rideId)
         {

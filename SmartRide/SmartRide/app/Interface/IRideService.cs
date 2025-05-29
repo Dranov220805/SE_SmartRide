@@ -5,6 +5,7 @@ namespace Interface
     public interface IRideService
     {
         Task<Ride> CreateBookRideAsync(Ride ride, Location pickupLocation, Location dropoffLocation);
+        Task<Ride> GetbookRideByEmailAsync(string email);
         //Task<Ride> GetRideDetailsAsync(Guid rideId);
         //Task<Ride> GetAllRidesAsync();
         //Task<bool> UpdateRideStatusAsync(Guid rideId, string status);

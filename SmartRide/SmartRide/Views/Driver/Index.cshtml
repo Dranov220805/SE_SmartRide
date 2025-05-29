@@ -45,9 +45,14 @@
                         </div>
                     </div>
                     <div class="ride-card-actions">
-                        <div class="time-info"><span class="icon"><i class="fa-solid fa-clock"></i></span> 12:30 PM</div> <!-- Consider adding datetime if Ride includes it -->
+                        <div class="time-info"><span class="icon"><i class="fa-solid fa-clock"></i></span>@ride.PickupDate</div> <!-- Consider adding datetime if Ride includes it -->
                         <div class="price-info"><span class="icon"><i class="fa-solid fa-money-bills"></i></span> $10.00</div> <!-- Replace with real price -->
-                        <a href="/Rides/Accept/@ride.RideId" class="accept-button">Accept Ride</a>
+                        <a href="javascript:void(0)"
+                           class="accept-button"
+                           data-ride-id="@ride.RideId"
+                           data-user-email="@ride.UserEmail">
+                            Accept Ride
+                        </a>
                     </div>
                 </div>
             }
@@ -60,14 +65,6 @@
 </div>
 
 <style>
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        background-color: #f0f0f0; /* Light gray page background */
-        color: #333333; /* Default dark gray text */
-        margin: 0;
-        padding: 20px;
-    }
-
     .pending-rides-container {
         max-width: 900px;
         margin: 20px auto;

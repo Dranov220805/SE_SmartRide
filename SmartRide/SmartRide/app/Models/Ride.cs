@@ -16,7 +16,8 @@ namespace Models
 
         public string? Status { get; set; }
         public string? UserEmail { get; set; }
-        public string? PickupDate { get; set; }
+        public DateTime? PickupDate { get; set; }
+        public Guid? DriverId { get; set; }
 
         // Navigation properties
         public virtual Location PickupLocation { get; set; }
@@ -45,4 +46,14 @@ namespace Models
         public double DestinationLongitude { get; set; }
         public string PickupDate { get; set; }
     }
+
+    public class RideAssignmentRequest
+    {
+        public Guid? DriverId { get; set; }
+
+        public string? DriverEmail { get; set; }
+
+        public string? UserEmail { get; set; }
+    }
+
 }

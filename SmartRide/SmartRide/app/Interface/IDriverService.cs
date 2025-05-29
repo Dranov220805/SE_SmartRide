@@ -5,6 +5,7 @@ namespace Interface
     public interface IDriverService
     {
         Task<List<Ride>> GetAllRidesAsync();
+        Task<bool> AssignRideToDriverAsync(string email, string userEmail);
         //Task<Driver> GetDriverByIdAsync(string email);
         //Task<Account> CreateDriverAsync(string email);
         //Task<Driver> UpdateDriverAsync(Driver driver);

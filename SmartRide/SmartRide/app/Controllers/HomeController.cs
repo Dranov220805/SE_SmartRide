@@ -8,6 +8,8 @@ using Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Interface;
+using System.Security.Claims;
 
 namespace Controllers
 {
@@ -17,17 +19,17 @@ namespace Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CustomerController _customerController;
         private readonly HomeService _homeService;
+        private readonly IRideService _rideService;
 
-        public HomeController(AccountRepository accountRepository)
+        public HomeController(IRideService rideService)
         {
-            _homeService = new HomeService(accountRepository);
+            _rideService = rideService;
             _logger = new LoggerFactory().CreateLogger<HomeController>();
         }
 
         [Authorize(Roles = "customer")]
         public IActionResult Index()
         {
-            var accounts = _homeService.GetAllAccounts();
             return View();
         }
 
@@ -38,9 +40,12 @@ namespace Controllers
         }
 
         [Authorize(Roles = "customer")]
-        public IActionResult TrackRide()
+        public async Task<IActionResult> TrackRide()
         {
-            return View();
+            var email = User.FindFirst(ClaimTypes.Name)?.Value;
+            var role = User.FindFirst(ClaimTypes.Role)?.Value;
+            var result = await _rideService.GetbookRideByEmailAsync(email);
+            return View(result);
         }
 
         [Authorize(Roles = "customer")]
@@ -49,7 +54,6 @@ namespace Controllers
             return View();
         }
 
-        [Authorize(Roles = "customer")]
         public IActionResult Preference()
         {
             return View();

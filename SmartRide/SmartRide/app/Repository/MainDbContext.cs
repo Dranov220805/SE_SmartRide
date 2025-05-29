@@ -51,6 +51,18 @@ namespace Repository
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
+            modelBuilder.Entity<Driver>()
+               .HasOne(d => d.Account)
+               .WithMany()
+               .HasForeignKey(d => d.AccountId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Driver>()
+               .HasOne(d => d.Vehicle)
+               .WithMany()
+               .HasForeignKey(d => d.VehicleId)
+               .OnDelete(DeleteBehavior.Restrict);
+
             // Payment: Ride
             modelBuilder.Entity<Payment>()
                 .HasOne<Ride>()
