@@ -17,7 +17,8 @@ namespace Models
     public class DriverResponse
     {
         public Guid DriverId { get; set; }
-        public bool Availability { get; set; }
-
+        public Guid? RideId { get; set; }
+        public virtual Driver? Driver { get; set; }
+        public virtual Ride? Ride { get; set; }
     }
 }

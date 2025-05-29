@@ -36,12 +36,13 @@ namespace Controllers
         }
 
         [Authorize(Roles = "driver")]
-        public IActionResult TrackRide()
+        public async Task<IActionResult> TrackRide()
         {
             // Logic to retrieve and display rides assigned to the driver
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
-            return View();
+            var result = await _driverService.GetRidesByDriverEmail(email);
+            return View(result);
         }
 
         [Authorize(Roles = "driver")]
@@ -74,9 +75,12 @@ namespace Controllers
             }
             // Logic to assign the ride to the driver based on email and rideId
             var result = await _driverService.AssignRideToDriverAsync(driverEmail, request.UserEmail);
-            if (result == true)
+            if (result != null)
             {
-                return Json(new { success = true });
+                return Json(new { 
+                    success = true,
+                    results = result
+                });
             }
             else
             {
